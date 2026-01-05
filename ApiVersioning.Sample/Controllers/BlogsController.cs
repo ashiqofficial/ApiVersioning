@@ -32,14 +32,14 @@ public class BlogsController : ControllerBase
     /// <returns>A <see cref="BlogV1"/> instance.</returns>
     [HttpGet]
     [MapToApiVersion("1.0")]
-    public IActionResult GetV1()
+    public ActionResult<List<BlogV1>> GetV1()
     {
-        return Ok(new BlogV1
+        return Ok(new List<BlogV1> { new BlogV1
         {
             Id = 1,
             Title = "ASP.NET Basics",
             Content = "Simple content"
-        });
+        }});
     }
 
     /// <summary>
