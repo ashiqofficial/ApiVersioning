@@ -1,3 +1,9 @@
+// <summary>
+// Program entry for ApiVersioning.Sample.
+// Configures services, API versioning (URL segment, header, media-type, query), Swagger generation,
+// and registers controllers. Target: .NET 10.
+// </summary>
+
 using ApiVersioning.Sample.Configurations;
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
@@ -51,20 +57,37 @@ builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
 
 var app = builder.Build();
 
-var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 
 app.UseSwagger();
 
-app.UseSwaggerUI(options =>
+if (app.Environment.IsDevelopment())
 {
-    foreach (var description in provider.ApiVersionDescriptions)
+    app.UseSwaggerUI(options =>
     {
-        options.SwaggerEndpoint(
-            $"/swagger/{description.GroupName}/swagger.json",
-            description.GroupName.ToUpperInvariant()
-        );
-    }
-});
+        foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions)
+        {
+            options.SwaggerEndpoint(
+                $"/swagger/{description.GroupName}/swagger.json",
+                $"Sample API {description.GroupName.ToUpperInvariant()}");
+        }
+        options.RoutePrefix = string.Empty;
+    });
+}
+else
+{
+    app.UseSwaggerUI(options =>
+    {
+        foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions)
+        {
+            options.SwaggerEndpoint(
+                $"/swagger/{description.GroupName}/swagger.json",
+                $"Sample API {description.GroupName.ToUpperInvariant()}");
+        }
+        options.RoutePrefix = "swagger";
+    });
+
+}
 
 app.MapControllers();
 app.Run();

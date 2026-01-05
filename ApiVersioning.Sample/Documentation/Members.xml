@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RepositoryMembers generatedOn="2026-01-05">
+  <!-- File: ApiVersioning.Sample/Controllers/BlogsController.cs -->
+  <File path="ApiVersioning.Sample/Controllers/BlogsController.cs">
+    <PublicTypes>
+      <Type name="BlogsController" kind="class" accessibility="public" base="ControllerBase">
+        <Attributes>
+          <Attribute name="ApiController" />
+          <Attribute name="Route" value="api/v{version:apiVersion}/blogs" />
+          <Attribute name="ApiVersion" value="1.0" />
+          <Attribute name="ApiVersion" value="2.0" />
+          <Attribute name="ApiVersion" value="3.0" deprecated="true" />
+        </Attributes>
+        <PublicMethods>
+          <Method name="GetById" return="IActionResult">
+            <Parameter name="id" type="int" />
+            <Summary>Shared endpoint (v1 + v2)</Summary>
+          </Method>
+          <Method name="GetV1" return="IActionResult">
+            <Summary>v1 list endpoint</Summary>
+            <MappedToApiVersion>1.0</MappedToApiVersion>
+          </Method>
+          <Method name="GetV2" return="IActionResult">
+            <Parameter name="page" type="int" default="1" />
+            <Parameter name="pageSize" type="int" default="10" />
+            <Summary>v2 paged list endpoint</Summary>
+            <MappedToApiVersion>2.0</MappedToApiVersion>
+          </Method>
+          <Method name="GetV3" return="IActionResult">
+            <Summary>v3 deprecated/preview endpoint</Summary>
+            <MappedToApiVersion>3.0</MappedToApiVersion>
+          </Method>
+        </PublicMethods>
+        <PrivateMembers />
+      </Type>
+    </PublicTypes>
+    <PrivateTypes />
+  </File>
+
+  <!-- File: ApiVersioning.Sample/Controllers/HealthController.cs -->
+  <File path="ApiVersioning.Sample/Controllers/HealthController.cs">
+    <PublicTypes>
+      <Type name="HealthController" kind="class" accessibility="public" base="ControllerBase">
+        <Attributes>
+          <Attribute name="Route" value="api/[controller]" />
+          <Attribute name="ApiController" />
+        </Attributes>
+        <PublicMethods>
+          <Method name="Get" return="IActionResult">
+            <Summary>Health check endpoint</Summary>
+          </Method>
+        </PublicMethods>
+        <PrivateMembers />
+      </Type>
+    </PublicTypes>
+    <PrivateTypes />
+  </File>
+
+  <!-- File: ApiVersioning.Sample/Program.cs -->
+  <File path="ApiVersioning.Sample/Program.cs">
+    <Description>Top-level statements configuring the application.</Description>
+    <PublicTypes />
+    <PrivateTypes />
+    <RegisteredServices>
+      <Service name="Controllers" registration="AddControllers" />
+      <Service name="EndpointsApiExplorer" registration="AddEndpointsApiExplorer" />
+      <Service name="ApiVersioning" registration="AddApiVersioning" />
+      <Service name="ApiExplorer (versioning aware)" registration="AddApiExplorer" />
+      <Service name="SwaggerGen" registration="AddSwaggerGen" />
+    </RegisteredServices>
+    <Notes>
+      <Note>Uses URL segment, header, media-type and query string readers for API versioning (configured via ApiVersionReader.Combine).</Note>
+      <Note>Contains Swagger UI registration iterating over IApiVersionDescriptionProvider.</Note>
+    </Notes>
+  </File>
+
+  <!-- File: ApiVersioning.Sample/ApiVersioning.Sample.http -->
+  <File path="ApiVersioning.Sample/ApiVersioning.Sample.http">
+    <Description>HTTP request collection file (no code members).</Description>
+  </File>
+
+  <!-- Inferred model types (source files not found in workspace; inferred from controller usage) -->
+  <InferredModels note="These types were referenced in controllers but corresponding source files were not found. Properties are inferred from usages in controllers.">
+    <Type name="ApiVersioning.Sample.Models.BlogV1" accessibility="public" inferred="true">
+      <Property name="Id" type="int" accessibility="public" />
+      <Property name="Title" type="string" accessibility="public" />
+      <Property name="Content" type="string" accessibility="public" />
+    </Type>
+    <Type name="ApiVersioning.Sample.Models.BlogV2" accessibility="public" inferred="true">
+      <Property name="Id" type="int" accessibility="public" />
+      <Property name="Title" type="string" accessibility="public" />
+      <Property name="Content" type="string" accessibility="public" />
+      <Property name="Author" type="string" accessibility="public" />
+      <Property name="CreatedDate" type="DateTime" accessibility="public" />
+    </Type>
+    <Type name="ApiVersioning.Sample.Models.BlogV3" accessibility="public" inferred="true">
+      <Property name="Id" type="int" accessibility="public" />
+      <Property name="Title" type="string" accessibility="public" />
+      <Property name="Summary" type="string" accessibility="public" />
+      <Property name="Tags" type="string[]" accessibility="public" />
+    </Type>
+  </InferredModels>
+
+  <Warnings>
+    <Warning file="ApiVersioning.Sample/Models/*" message="Model source files not found in workspace; model members were inferred from controller initializers." />
+  </Warnings>
+</RepositoryMembers>
