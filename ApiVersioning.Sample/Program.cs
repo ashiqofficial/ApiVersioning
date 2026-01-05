@@ -88,6 +88,9 @@ else
     });
 
 }
-
+if (app.Environment.IsProduction())
+{
+    app.UseMiddleware<ApiAnalyticsMiddleware>();
+}
 app.MapControllers();
 app.Run();
