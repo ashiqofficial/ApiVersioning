@@ -1,0 +1,6 @@
+@ApiVersioning.Sample_HostAddress = http://localhost:5208
+
+GET {{ApiVersioning.Sample_HostAddress}}/Blog/
+Accept: application/json
+
+###

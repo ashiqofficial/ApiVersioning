@@ -1,0 +1,28 @@
+{
+  "info": {
+    "name": "Blog API Versioning Sample"
+  },
+  "item": [
+    {
+      "name": "Get Blogs v1",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/v1/blogs"
+      }
+    },
+    {
+      "name": "Get Blogs v2",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/v2/blogs"
+      }
+    },
+    {
+      "name": "Get Comments v1",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/v1/comments"
+      }
+    }
+  ]
+}
